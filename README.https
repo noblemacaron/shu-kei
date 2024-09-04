@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個別合計計算機（リセット機能付き）</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .input-group {
+            display: inline-block;
+            margin: 10px;
+            text-align: left;
+        }
+        input[type="text"] {
+            font-size: 20px;
+            padding: 5px;
+            width: 100px;
+        }
+        .result {
+            font-size: 20px;
+            margin-left: 10px;
+        }
+        .reset-button {
+            font-size: 16px;
+            padding: 5px 10px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>個別合計計算機（リセット機能付き）</h1>
+    <div class="input-group">
+        <input type="text" id="input1" placeholder="数字を入力">
+        <span id="result1" class="result">合計: 0</span>
+        <button id="reset1" class="reset-button">リセット</button>
+    </div>
+    <div class="input-group">
+        <input type="text" id="input2" placeholder="数字を入力">
+        <span id="result2" class="result">合計: 0</span>
+        <button id="reset2" class="reset-button">リセット</button>
+    </div>
+    <div class="input-group">
+        <input type="text" id="input3" placeholder="数字を入力">
+        <span id="result3" class="result">合計: 0</span>
+        <button id="reset3" class="reset-button">リセット</button>
+    </div>
+
+    <script>
+        const sums = [0, 0, 0];
+
+        function updateSum(inputElement, index) {
+            const value = parseFloat(inputElement.value);
+            if (!isNaN(value)) {
+                sums[index] += value;
+                document.getElementById('result' + (index + 1)).textContent = '合計: ' + sums[index];
+                inputElement.value = '';
+            } else {
+                alert('有効な数字を入力してください');
+            }
+        }
+
+        function resetSum(index) {
+            sums[index] = 0;
+            document.getElementById('result' + (index + 1)).textContent = '合計: 0';
+        }
+
+        document.querySelectorAll('input[type="text"]').forEach((input, index) => {
+            input.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    updateSum(input, index);
+                }
+            });
+        });
+
+        document.querySelectorAll('.reset-button').forEach((button, index) => {
+            button.addEventListener('click', function() {
+                resetSum(index);
+            });
+        });
+    </script>
+
+</body>
+</html>
